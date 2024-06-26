@@ -12,10 +12,10 @@ import java.util.stream.Collectors;
 public class EmployeeDAOImpl implements EmployeeDAO {
 
     private ArrayList<Employee> employee = new ArrayList<>();
-    private ArrayList<EmployeeDTO> employeeDTO = new ArrayList<>();
-    private Set<EmployeeDTO> employeeSet;
+  ;
+    private Set<Employee> employeeSet;
 
-    public EmployeeDAOImpl(Set<EmployeeDTO> employeeList) {
+    public EmployeeDAOImpl(Set<Employee> employeeList) {
         this.employeeSet = new HashSet<>(employeeList);
     }
 
@@ -24,7 +24,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         Employee foundEmployee = null;
 
         for (Employee employee : employee) {
-            if (employee.getID().equals(id)) {
+            if (employee.empId().equals(id)) {
                 foundEmployee = employee;
             }
         }
@@ -47,8 +47,8 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     }
 
     @Override
-    public List<EmployeeDTO> searchByHireDateRange(LocalDate startDate, LocalDate endDate){
-        return employeeSet.stream().filter(employeeDTO1 -> !employeeDTO1.dateOfJoining().isBefore(startDate) && !employeeDTO1.dateOfJoining().isAfter(endDate)).collect(Collectors.toList());
+    public List<Employee> searchByHireDateRange(LocalDate startDate, LocalDate endDate){
+        return employeeSet.stream().filter(employee -> !employee.dateOfJoining().isBefore(startDate) && !employee.dateOfJoining().isAfter(endDate)).collect(Collectors.toList());
     }
 
     public List<Employee> searchByAgeRange(int minAge, int maxAge) {
