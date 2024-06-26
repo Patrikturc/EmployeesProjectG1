@@ -7,7 +7,9 @@ import java.util.Date;
 import java.util.List;
 
 
-public class EmployeeDAOImpl implements EmployeeDAO{
+
+public class EmployeeDAOImpl implements EmployeeDAO {
+  
     private ArrayList<EmployeeDTO> employeeDTO = new ArrayList<>();
 
 
@@ -23,6 +25,7 @@ public class EmployeeDAOImpl implements EmployeeDAO{
 
         return foundEmployee;
     }
+
         public List<EmployeeDTO> searchByLastName (String lastName){
             List<EmployeeDTO> employeeList = new ArrayList<>();
             for (EmployeeDTO employee : employeeDTO) {
@@ -53,6 +56,23 @@ public class EmployeeDAOImpl implements EmployeeDAO{
             }
             return employeeList;
         }
+        return employeeList;
     }
 
+    public List<EmployeeDTO> searchByHireDateRange(LocalDate startDate, LocalDate endDate){
+        return null;
+    }
 
+    public List<EmployeeDTO> searchByAgeRange(int minAge, int maxAge){
+        List<EmployeeDTO> employeeList = new ArrayList<>();
+
+        LocalDate currentDate = LocalDate.now();
+
+        for (EmployeeDTO employee : employeeDTO){
+            int employeeAge = currentDate.getYear() - employee.dob().getYear();
+            if(employeeAge >= minAge && employeeAge <= maxAge){
+                employeeList.add(employee);
+            }
+        }
+    }
+}
