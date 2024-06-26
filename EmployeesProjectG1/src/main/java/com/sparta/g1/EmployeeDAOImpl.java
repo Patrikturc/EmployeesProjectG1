@@ -1,14 +1,17 @@
 package com.sparta.g1;
 
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 
-public class EmployeeDAOImpl {
+public class EmployeeDAOImpl implements EmployeeDAO{
     private ArrayList<EmployeeDTO> employeeDTO = new ArrayList<>();
 
 
-    public EmployeeDTO searchByID(String id) {
+    public EmployeeDTO searchById(String id) {
         EmployeeDTO foundEmployee = null;
 
         for (EmployeeDTO employee : employeeDTO) {
@@ -20,18 +23,35 @@ public class EmployeeDAOImpl {
 
         return foundEmployee;
     }
-
-        public EmployeeDTO searchByLastName (String lastName){
+        public List<EmployeeDTO> searchByLastName (String lastName){
+            List<EmployeeDTO> employeeList = new ArrayList<>();
             for (EmployeeDTO employee : employeeDTO) {
 
-                if (employee.getLastName()
+                if (employee.lastName()
                         .toLowerCase()
                         .contains(lastName.toLowerCase())) {
-                    return employee;
-                    break;
+                    employeeList.add(employee);
                 }
             }
-            return null;
+            return employeeList;
+        }
+
+        public List<EmployeeDTO> searchByHireDateRange(LocalDate startDate, LocalDate endDate){
+        return null;
+        }
+
+        public List<EmployeeDTO> searchByAgeRange(int minAge, int maxAge){
+            List<EmployeeDTO> employeeList = new ArrayList<>();
+
+            LocalDate currentDate = LocalDate.now();
+
+            for (EmployeeDTO employee : employeeDTO){
+                int employeeAge = currentDate.getYear() - employee.dob().getYear();
+                if(employeeAge >= minAge && employeeAge <= maxAge){
+                    employeeList.add(employee);
+                }
+            }
+            return employeeList;
         }
     }
 
