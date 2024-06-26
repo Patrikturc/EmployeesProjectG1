@@ -4,8 +4,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface EmployeeDAO {
-    EmployeeDTO searchById(String empID);
-    List<EmployeeDTO> searchByLastName(String lastName);
-    List<EmployeeDTO> searchByHireDateRange(LocalDate startDate, LocalDate endDate);
-    List<EmployeeDTO> searchByAgeRange(int minAge, int maxAge);
+    Employee searchById(String empID);
+    List<Employee> searchByLastName(String lastName);
+    List<Employee> searchByHireDateRange(LocalDate startDate, LocalDate endDate);
+    List<Employee> searchByAgeRange(int minAge, int maxAge);
 }
