@@ -1,14 +1,17 @@
 package com.sparta.g1;
 
 
-import java.lang.reflect.Array;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
 
 public class EmployeeDAOImpl implements EmployeeDAO {
 
+    private ArrayList<Employee> employee = new ArrayList<>();
     private ArrayList<EmployeeDTO> employeeDTO = new ArrayList<>();
     private Set<EmployeeDTO> employeeSet;
 
@@ -17,22 +20,22 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     }
 
 
-    public EmployeeDTO searchById(String id) {
-        EmployeeDTO foundEmployee = null;
+    public Employee searchById(String id) {
+        Employee foundEmployee = null;
 
-//        for (EmployeeDTO employee : employeeDTO) {
-//            if (employee.empID() == id) {
-//                foundEmployee = employee;
-//            }
-//        }
+        for (Employee employee : employee) {
+            if (employee.getID().equals(id)) {
+                foundEmployee = employee;
+            }
+        }
 
 
-        return null;
+        return foundEmployee;
     }
 
-    public List<EmployeeDTO> searchByLastName (String lastName){
-        List<EmployeeDTO> employeeList = new ArrayList<>();
-        for (EmployeeDTO employee : employeeDTO) {
+    public List<Employee> searchByLastName (String lastName){
+        List<Employee> employeeList = new ArrayList<>();
+        for (Employee employee : employee) {
 
             if (employee.lastName()
                     .toLowerCase()
@@ -48,12 +51,12 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         return employeeSet.stream().filter(employeeDTO1 -> !employeeDTO1.dateOfJoining().isBefore(startDate) && !employeeDTO1.dateOfJoining().isAfter(endDate)).collect(Collectors.toList());
     }
 
-    public List<EmployeeDTO> searchByAgeRange(int minAge, int maxAge) {
-        List<EmployeeDTO> employeeList = new ArrayList<>();
+    public List<Employee> searchByAgeRange(int minAge, int maxAge) {
+        List<Employee> employeeList = new ArrayList<>();
 
         LocalDate currentDate = LocalDate.now();
 
-        for (EmployeeDTO employee : employeeDTO) {
+        for (Employee employee : employee) {
             int employeeAge = currentDate.getYear() - employee.dob().getYear();
             if (employeeAge >= minAge && employeeAge <= maxAge) {
                 employeeList.add(employee);
