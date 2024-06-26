@@ -32,18 +32,9 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
         return foundEmployee;
     }
-
+    @Override
     public List<Employee> searchByLastName (String lastName){
-        List<Employee> employeeList = new ArrayList<>();
-        for (Employee employee : employee) {
-
-            if (employee.lastName()
-                    .toLowerCase()
-                    .contains(lastName.toLowerCase())) {
-                employeeList.add(employee);
-            }
-        }
-        return employeeList;
+        return employeeSet.stream().filter(employee -> employee.lastName().toLowerCase().contains(lastName.toLowerCase())).collect(Collectors.toList());
     }
 
     @Override
@@ -53,10 +44,9 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
     public List<Employee> searchByAgeRange(int minAge, int maxAge) {
         List<Employee> employeeList = new ArrayList<>();
-
         LocalDate currentDate = LocalDate.now();
 
-        for (Employee employee : employee) {
+        for (Employee employee : employeeSet) {
             int employeeAge = currentDate.getYear() - employee.dob().getYear();
             if (employeeAge >= minAge && employeeAge <= maxAge) {
                 employeeList.add(employee);
