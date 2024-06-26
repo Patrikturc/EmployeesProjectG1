@@ -5,7 +5,6 @@ import java.time.format.DateTimeFormatter;
 
 public class DataSanitisation {
 
-
     private static int numberOfCorruptedEntries = 0;
 
     public boolean checkValidGender(Employee employee) {
@@ -21,7 +20,7 @@ public class DataSanitisation {
         return employee.email().matches("^([a-zA-Z0-9_\\-.]+)@([a-zA-Z0-9_\\-.]+)\\.([a-zA-Z]{2,5})$");
     }
 
-    public boolean checkEmpIdIsCorrectLength(Employee employee) {
+    public static boolean checkEmpIdIsCorrectLength(Employee employee) {
         if (employee.empId().length() == 6) {
             return true;
         } else {
@@ -30,7 +29,7 @@ public class DataSanitisation {
         }
     }
 
-    public boolean checkDobIsBeforeDoj(Employee employee) {
+    public static boolean checkDobIsBeforeDoj(Employee employee) {
         if (employee.dob().isBefore(employee.dateOfJoining())) {
             return true;
         } else {
