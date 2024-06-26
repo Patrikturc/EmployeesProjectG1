@@ -6,18 +6,18 @@ import java.util.ArrayList;
 
 public class EmployeeDataConverter {
     private static String[] employeeDataReader = new String[0];
-    private static ArrayList<EmployeeDTO> listOfEmployeeDTOS;
+    private static ArrayList<Employee> listOfEmployees;
 
 
     public static void employeeDataConverter() throws IOException {
-        listOfEmployeeDTOS = new ArrayList<>();
+        listOfEmployees = new ArrayList<>();
         employeeDataReader = EmployeeFactory.getEmployees(500);
         for (String employeeRecord : employeeDataReader){
-            listOfEmployeeDTOS.add(createEmployeeFromData(employeeRecord));
+            listOfEmployees.add(createEmployeeFromData(employeeRecord));
         }
     }
 
-    private static EmployeeDTO createEmployeeFromData(String data) {
+    private static Employee createEmployeeFromData(String data) {
         String[] parts = data.split(",");
         if (parts.length != 10) throw new IllegalArgumentException("Invalid data format");
 
@@ -32,11 +32,11 @@ public class EmployeeDataConverter {
         LocalDate dateOfJoining = LocalDate.parse(parts[8]);
         int salary = Integer.parseInt(parts[9]);
 
-        return new EmployeeDTO(empID, prefix, firstName, middleInitial, lastName, gender, email, dateOfBirth, dateOfJoining, salary);
+        return new Employee(empID, prefix, firstName, middleInitial, lastName, gender, email, dateOfBirth, dateOfJoining, salary);
     }
 
-    public static ArrayList<EmployeeDTO> getListOfEmployees() {
-        return listOfEmployeeDTOS;
+    public static ArrayList<Employee> getListOfEmployees() {
+        return listOfEmployees;
     }
 
 }

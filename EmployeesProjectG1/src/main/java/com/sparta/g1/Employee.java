@@ -2,21 +2,21 @@ package com.sparta.g1;
 
 import java.time.LocalDate;
 
-public record EmployeeDTO(int empID,
-                          String prefix,
-                          String firstName,
-                          char middleInitial,
-                          String lastName,
-                          char gender,
-                          String email,
-                          LocalDate dob,
-                          LocalDate dateOfJoining,
-                          Integer salary) {
+public record Employee(String empId,
+                       String prefix,
+                       String firstName,
+                       String middleInitial,
+                       String lastName,
+                       String gender,
+                       String email,
+                       String dob,
+                       String dateOfJoining,
+                       String salary) {
 
     @Override
     public String toString() {
         return "EmployeeDTO{" +
-                "empID=" + empID +
+                "empId=" + empId +
                 ", prefix='" + prefix + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", middleInitial='" + middleInitial + '\'' +
