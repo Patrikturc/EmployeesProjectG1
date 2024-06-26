@@ -1,28 +1,33 @@
 package com.sparta.g1;
 
 
+import java.lang.reflect.Array;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 public class EmployeeDAOImpl implements EmployeeDAO {
 
     private ArrayList<EmployeeDTO> employeeDTO = new ArrayList<>();
+    private Set<EmployeeDTO> employeeSet;
+
+    public EmployeeDAOImpl(Set<EmployeeDTO> employeeList) {
+        this.employeeSet = new HashSet<>(employeeList);
+    }
+
 
     public EmployeeDTO searchById(String id) {
         EmployeeDTO foundEmployee = null;
 
-        for (EmployeeDTO employee : employeeDTO) {
-            if (employee.getID().equals(id)) {
-                foundEmployee = employee;
-            }
-        }
+//        for (EmployeeDTO employee : employeeDTO) {
+//            if (employee.empID() == id) {
+//                foundEmployee = employee;
+//            }
+//        }
 
 
-        return foundEmployee;
+        return null;
     }
 
     public List<EmployeeDTO> searchByLastName (String lastName){
@@ -38,8 +43,9 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         return employeeList;
     }
 
+    @Override
     public List<EmployeeDTO> searchByHireDateRange(LocalDate startDate, LocalDate endDate){
-        return null;
+        return employeeSet.stream().filter(employeeDTO1 -> !employeeDTO1.dateOfJoining().isBefore(startDate) && !employeeDTO1.dateOfJoining().isAfter(endDate)).collect(Collectors.toList());
     }
 
     public List<EmployeeDTO> searchByAgeRange(int minAge, int maxAge) {
