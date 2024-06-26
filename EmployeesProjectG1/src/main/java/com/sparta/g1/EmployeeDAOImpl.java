@@ -21,18 +21,16 @@ public class EmployeeDAOImpl {
         return foundEmployee;
     }
 
-        public EmployeeDTO searchByLastName (String lastName){
-            for (EmployeeDTO employee : employeeDTO) {
+    public EmployeeDTO searchByLastName (String lastName){
+        for (EmployeeDTO employee : employeeDTO) {
 
-                if (employee.getLastName()
-                        .toLowerCase()
-                        .contains(lastName.toLowerCase())) {
-                    return employee;
-                    break;
-                }
+            if (employee.getLastName()
+                    .toLowerCase()
+                    .contains(lastName.toLowerCase())) {
+                return employee;
+                break;
             }
-            return null;
         }
+        return null;
     }
-
-
+}
