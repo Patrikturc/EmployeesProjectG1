@@ -22,4 +22,13 @@ public class DataSanitisation {
         }
     }
 
+    public boolean checkDobIsBeforeDoj(Employee employee) {
+        if (employee.dob().isBefore(employee.dateOfJoining())) {
+            return true;
+        } else {
+            numberOfCorruptedEntries++;
+            return false;
+        }
+    }
+
 }
