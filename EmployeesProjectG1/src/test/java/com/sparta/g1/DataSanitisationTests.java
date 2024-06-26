@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
+
 public class DataSanitisationTests {
 
     @Test
@@ -13,8 +15,19 @@ public class DataSanitisationTests {
         boolean expected = false;
 
         //Act
-        DataSanitisation dataSanitisation = new DataSanitisation();
-        boolean actual = dataSanitisation.checkValidPositiveSalary(new Employee("1","","","","","","","","","-100000"));
+        boolean actual = DataSanitisation.isValidSalary(new Employee("1","","","","","","", "","","-100000"));
+
+        //Assert
+        Assertions.assertEquals(expected,actual);
+    }
+    @Test
+    @DisplayName("Given an employee has a positive salary then true should be returned")
+    void givenNegativeSalaryReturnFalse(){
+        //Arrange
+        boolean expected = false;
+
+        //Act
+        boolean actual = DataSanitisation.isValidSalary(new Employee("1","","","","","","","","","100000"));
 
         //Assert
         Assertions.assertEquals(expected,actual);
