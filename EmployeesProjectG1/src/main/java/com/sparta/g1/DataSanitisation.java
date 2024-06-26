@@ -7,4 +7,5 @@ public class DataSanitisation {
     public boolean checkValidGender(EmployeeDTO employee) {
         return employee.gender() == 'M' || employee.gender() == 'F';
     }
+
 }
