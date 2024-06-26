@@ -1,5 +1,6 @@
 package com.sparta.g1;
 
+import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -12,19 +13,24 @@ import java.util.stream.Collectors;
 //This is a comment left by kian
 public class App {
     public static void main(String[] args) throws IOException {
-        ArrayList<EmployeeDTO> employeeList = EmployeeDataConverter.getListOfEmployees();
+        ArrayList<Employee> employeeList = EmployeeDataConverter.getListOfEmployees();
 
-        Set<EmployeeDTO> employeeSet = new HashSet<>(employeeList);
-
-//        employeeSet = employeeSet.stream().filter(employeeDTO -> employeeDTO.dateOfJoining() != null).collect(Collectors.toSet());
-
+        Set<Employee> employeeSet = new HashSet<>(employeeList);
         EmployeeDAO employeeDAO = new EmployeeDAOImpl(employeeSet);
 
-        LocalDate startDate = LocalDate.of(2018, 1, 1);
-        LocalDate endDate = LocalDate.of(2019, 12, 31);
+        LocalDate startDate = LocalDate.of(1999, 1, 1);
+        LocalDate endDate = LocalDate.of(2005, 12, 31);
 
-        List<EmployeeDTO> result = employeeDAO.searchByHireDateRange(startDate, endDate);
-        result.forEach(employeeDTO -> System.out.println(employeeDTO.firstName() + " " + employeeDTO.lastName() + " " + employeeDTO.dateOfJoining()));
+        List<Employee> result = employeeDAO.searchByHireDateRange(startDate, endDate);
+
+        for (Employee employee : result) {
+        System.out.println(employee.firstName() + " " + employee.lastName() + " " + employee.dateOfJoining());
+        }
+        System.out.println(result.size() + " " + DataSanitisation.getNumberOfCorruptedEntries());
+
+
+
+
 
     }
 }
