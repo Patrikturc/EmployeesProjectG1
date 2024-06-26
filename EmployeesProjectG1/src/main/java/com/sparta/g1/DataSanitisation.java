@@ -13,4 +13,13 @@ public class DataSanitisation {
         }
     }
 
+    public boolean checkEmpIdIsCorrectLength(Employee employee) {
+        if (employee.empId().length() == 6) {
+            return true;
+        } else {
+            numberOfCorruptedEntries++;
+            return false;
+        }
+    }
+
 }
