@@ -9,8 +9,8 @@ public record Employee(String empId,
                        String lastName,
                        String gender,
                        String email,
-                       String dob,
-                       String dateOfJoining,
+                       LocalDate dob,
+                       LocalDate dateOfJoining,
                        String salary) {
 
     @Override
