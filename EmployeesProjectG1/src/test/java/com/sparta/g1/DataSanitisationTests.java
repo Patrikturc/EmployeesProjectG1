@@ -45,21 +45,21 @@ public class DataSanitisationTests {
     @Test
     public void checkIdIsValidLength() {
         boolean expected = true;
-        boolean actual = DataSanitisation.checkEmpIdIsCorrectLength(bibi);
+        boolean actual = DataSanitisation.checkEmpIdIsCorrectLength(bibi.empId());
         Assertions.assertEquals(expected,actual);
     }
 
     @Test
     public void checkValidGender() {
         boolean expected = true;
-        boolean actual = DataSanitisation.checkValidGender(bibi);
+        boolean actual = DataSanitisation.checkValidGender(bibi.gender());
         Assertions.assertEquals(expected, actual);
     }
 
     @Test
     public void isValidEmail() {
         boolean expected = true;
-        boolean actual = DataSanitisation.isValidEmail(bibi);
+        boolean actual = DataSanitisation.isValidEmail(bibi.email());
         Assertions.assertEquals(expected, actual);
     }
 
