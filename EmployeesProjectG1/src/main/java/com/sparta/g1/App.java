@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 //This is a comment left by kian
 public class App {
     public static void main(String[] args) throws IOException {
-        ArrayList<Employee> employeeList = EmployeeDataConverter.getListOfEmployees();
+        HashSet<Employee> employeeList = EmployeeDataConverter.getListOfEmployees();
 
         Set<Employee> employeeSet = new HashSet<>(employeeList);
         EmployeeDAO employeeDAO = new EmployeeDAOImpl(employeeSet);
