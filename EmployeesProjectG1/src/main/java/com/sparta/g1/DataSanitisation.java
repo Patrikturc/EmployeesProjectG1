@@ -43,7 +43,6 @@ public class DataSanitisation {
             return false;
         }
     }
-    public static int getNumberOfCorruptedEntries() {
 
     public static boolean isValidSalary(String salary){
         if(Integer.parseInt(salary)<0){
@@ -54,7 +53,6 @@ public class DataSanitisation {
     }
 
     public static int getNumberOfCorruptedEntries () {
-
         return numberOfCorruptedEntries;
     }
 
