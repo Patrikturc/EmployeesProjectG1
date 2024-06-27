@@ -7,7 +7,7 @@ public class DataSanitisation {
 
     private static int numberOfCorruptedEntries = 0;
 
-    public boolean checkValidGender(Employee employee) {
+    public static boolean checkValidGender(Employee employee) {
         if (employee.gender().equals("M") || employee.gender().equals("F")) {
             return true;
         } else {
