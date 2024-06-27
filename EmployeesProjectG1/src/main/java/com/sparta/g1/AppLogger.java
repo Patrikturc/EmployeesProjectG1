@@ -22,7 +22,7 @@ public class AppLogger {
 
     private static void setupFileHandler(Level level, boolean append) {
         try {
-            FileHandler fileHandler = new FileHandler("src/main/resources/log.log", append);
+            FileHandler fileHandler = new FileHandler("EmployeesProjectG1/src/main/resources/log.log", append);
             fileHandler.setLevel(level);
             fileHandler.setFormatter(new CustomFormatter());
             logger.addHandler(fileHandler);
@@ -38,9 +38,5 @@ public class AppLogger {
         consoleHandler.setFormatter(new CustomFormatter());
         logger.addHandler(consoleHandler);
     }
-
-//    static {
-//        LoggerInitialiser.setupLogger(logger, Level.ALL, Level.INFO, true);
-//    }
 
 }
