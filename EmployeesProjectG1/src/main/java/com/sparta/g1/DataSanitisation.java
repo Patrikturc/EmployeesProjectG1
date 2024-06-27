@@ -2,16 +2,24 @@ package com.sparta.g1;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DataSanitisation {
+
+    private static final Logger logger = AppLogger.getLogger(Level.ALL, Level.INFO, true);
 
     private static int numberOfCorruptedEntries = 0;
 
     public static boolean checkValidGender(String gender) {
+        logger.log(Level.INFO, "Entered check valid gender method");
+
         if (gender.equals("M") || gender.equals("F")) {
+            logger.log(Level.INFO, "Exited check valid gender method");
             return true;
         } else {
             numberOfCorruptedEntries++;
+            logger.log(Level.INFO, "Exited check valid gender method");
             return false;
         }
     }
