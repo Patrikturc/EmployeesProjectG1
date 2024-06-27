@@ -1,10 +1,8 @@
 package com.sparta.g1;
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusListener;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -13,6 +11,10 @@ import java.util.HashSet;
 public class AppWindow extends JFrame implements ActionListener {
     private int windowHeight;
     private int windowWidth;
+    private String panelID = "ID";
+    private String panelName = "Name";
+    private String panelAge = "Age";
+    private String panelDate = "Date";
     JButton goButton = new JButton("Go");
     JRadioButton idSearch = new JRadioButton("Search by ID");
     JRadioButton lastNameSearch = new JRadioButton("Search by Last Name");
@@ -95,11 +97,12 @@ public class AppWindow extends JFrame implements ActionListener {
         searchFieldStartDate.setText("MM/DD/YYYY");
         searchFieldEndDate.setText("MM/DD/YYYY");
 
-        searchPanel.add(oneSearchPanel, "ID");
-        searchPanel.add(twoSearchPanel, "Name");
-        searchPanel.add(threeSearchPanel,"Age");
-        searchPanel.add(fourSearchPanel, "HireDate");
+        searchPanel.add(oneSearchPanel, panelID);
+        searchPanel.add(twoSearchPanel, panelName);
+        searchPanel.add(threeSearchPanel,panelAge);
+        searchPanel.add(fourSearchPanel, panelDate);
 
+        idSearch.setSelected(true);
 
         this.add(searchPanel);
 
@@ -118,23 +121,23 @@ public class AppWindow extends JFrame implements ActionListener {
         Object source = event.getSource();
 
         if(source == idSearch){
-            searchLayout.show(searchPanel,"ID");
+            searchLayout.show(searchPanel,panelID);
         }
         else if(source == lastNameSearch){
-            searchLayout.show(searchPanel,"Name");
+            searchLayout.show(searchPanel,panelName);
         }
         else if (source == ageRangeSearch) {
-            searchLayout.show(searchPanel,"Age");
+            searchLayout.show(searchPanel,panelAge);
         }
         else if (source == dateRangeSearch){
-            searchLayout.show(searchPanel,"HireDate");
+            searchLayout.show(searchPanel,panelDate);
         }
 
         else if (source==goButton) {
 
             if(idSearch.isSelected()){
 
-                if(employeeIdSearchField.getText().length()==6){
+                if(FieldChecks.hasValidID(employeeIdSearchField.getText())){
                     Employee employee = employeeDAO.searchById(employeeIdSearchField.getText());
                     if(employee == null){
                         searchResults.setText("No employee found matching: " + employeeIdSearchField.getText());
@@ -149,20 +152,21 @@ public class AppWindow extends JFrame implements ActionListener {
             }
 
             else if(lastNameSearch.isSelected()){
-                if(employeeNameSearchField.getText().isEmpty() || employeeNameSearchField.getText().length()>20){
+                String partialNameSearch = employeeNameSearchField.getText().strip();
+                if(!FieldChecks.hasValidPartialName(partialNameSearch)){
                     JOptionPane.showMessageDialog(this,"Please enter a valid name.");
                 }
                 else{
-                    ArrayList<Employee> nameSearch = new ArrayList<>(employeeDAO.searchByLastName(employeeNameSearchField.getText()));
+                    ArrayList<Employee> nameSearch = new ArrayList<>(employeeDAO.searchByLastName(partialNameSearch));
                     if(!nameSearch.isEmpty()){
-                        searchResults.setText("Number of records returned that partially match: '" + employeeNameSearchField.getText() +"' is: " + nameSearch.size()+ "\n");
+                        searchResults.setText("Number of records returned that partially match: '" + partialNameSearch +"' is: " + nameSearch.size()+ "\n");
                         for(Employee employee : nameSearch){
                             searchResults.append("ID: "+ employee.empId() + ", First Name: " + employee.firstName() +", Last Name: " + employee.lastName() +  ", Email: " + employee.email() + "\n");
                         }
                         dialogPopupSuccess();
                     }
                     else {
-                        searchResults.setText("No records found.");
+                        searchResults.setText("No records found for " + "'" + partialNameSearch + "'");
                     }
                 }
             }
@@ -190,10 +194,7 @@ public class AppWindow extends JFrame implements ActionListener {
             }
             else if (ageRangeSearch.isSelected()) {
 
-                if((searchFieldMinAge.getText().isEmpty() || searchFieldMaxAge.getText().isEmpty())
-                        || (getMinAgeFieldTextNumber()>getMaxAgeFieldTextNumber())
-                        || (getMinAgeFieldTextNumber()<0 || getMinAgeFieldTextNumber()> 120)
-                        || (getMaxAgeFieldTextNumber()<0 || getMaxAgeFieldTextNumber()> 120)
+                if(!FieldChecks.hasValidAgeRange(searchFieldMinAge.getText(),searchFieldMaxAge.getText())
                 ){
                     JOptionPane.showMessageDialog(this,"Please enter valid ages.");
                 }
