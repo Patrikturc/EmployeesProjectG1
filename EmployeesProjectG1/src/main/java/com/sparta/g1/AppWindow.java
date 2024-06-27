@@ -9,12 +9,10 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 public class AppWindow extends JFrame implements ActionListener {
-    private int windowHeight;
-    private int windowWidth;
-    private String panelID = "ID";
-    private String panelName = "Name";
-    private String panelAge = "Age";
-    private String panelDate = "Date";
+    private final String panelID = "ID";
+    private final String panelName = "Name";
+    private final String panelAge = "Age";
+    private final String panelDate = "Date";
     JButton goButton = new JButton("Go");
     JRadioButton idSearch = new JRadioButton("Search by ID");
     JRadioButton lastNameSearch = new JRadioButton("Search by Last Name");
@@ -42,9 +40,9 @@ public class AppWindow extends JFrame implements ActionListener {
 
 
     public AppWindow() throws IOException {
-        this.windowHeight = 800;
-        this.windowWidth = 800;
-        this.setSize(windowWidth,windowHeight);
+        int windowHeight = 800;
+        int windowWidth = 800;
+        this.setSize(windowWidth, windowHeight);
         setLocationRelativeTo(null);
         requestFocus();
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -230,27 +228,5 @@ public class AppWindow extends JFrame implements ActionListener {
         else{
             return ("Query ran successfully with " +  DataSanitisation.getNumberOfCorruptedEntries() + " corrupted entry found.");
         }
-    }
-
-//    private void dialogPopupSuccess(){
-//        JDialog successPopup = new JDialog(this,"Dialog Box");
-//        successPopup.setSize(350,100);
-//        JLabel label = new JLabel();
-//        if(DataSanitisation.getNumberOfCorruptedEntries()== 0 || DataSanitisation.getNumberOfCorruptedEntries()>1){
-//            label.setText("Query ran successfully with " +  DataSanitisation.getNumberOfCorruptedEntries() + " corrupted entries found.");
-//        }
-//        else{
-//            label.setText("Query ran successfully with " +  DataSanitisation.getNumberOfCorruptedEntries() + " corrupted entry found.");
-//        }
-//        successPopup.add(label);
-//        successPopup.setLocationRelativeTo(null);
-//        successPopup.requestFocus();
-//        successPopup.setVisible(true);
-//    }
-    private int getMinAgeFieldTextNumber(){
-        return Integer.parseInt(searchFieldMinAge.getText());
-    }
-    private int getMaxAgeFieldTextNumber(){
-        return Integer.parseInt(searchFieldMaxAge.getText());
     }
 }
