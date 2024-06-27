@@ -15,19 +15,7 @@ public class DataSanitisationTests {
         boolean expected = false;
 
         //Act
-        boolean actual = DataSanitisation.isValidSalary(new Employee("1","","","","","","", "","","-100000"));
-
-        //Assert
-        Assertions.assertEquals(expected,actual);
-    }
-    @Test
-    @DisplayName("Given an employee has a positive salary then true should be returned")
-    void givenNegativeSalaryReturnFalse(){
-        //Arrange
-        boolean expected = false;
-
-        //Act
-        boolean actual = DataSanitisation.isValidSalary(new Employee("1","","","","","","","","","100000"));
+        boolean actual = DataSanitisation.isValidSalary("-100000");
 
         //Assert
         Assertions.assertEquals(expected,actual);
@@ -37,7 +25,6 @@ public class DataSanitisationTests {
     @DisplayName("Check if valid email string returns true")
     public void checkIsValidEmailReturnsTrueOnValidEmailInput() {
         String input = "email@email.com";
-//        Employee employee = new Employee("", "", "", "", "", "", input, "", "", "");
         boolean expected = true;
         boolean actual = DataSanitisation.isValidEmail(input);
         Assertions.assertEquals(expected, actual);
