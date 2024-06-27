@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 //This is a comment left by kian
 public class App {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         DataSanitisation.checkValidGender("L");
     }
 }
