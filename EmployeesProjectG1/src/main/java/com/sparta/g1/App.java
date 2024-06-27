@@ -12,6 +12,11 @@ import java.util.stream.Collectors;
 //This is a comment left by kian
 public class App {
     public static void main(String[] args){
-      
+        try {
+            AppWindow appWindow = new AppWindow();
+        }
+        catch (IOException e){
+            throw new RuntimeException(e);
+        }
     }
 }

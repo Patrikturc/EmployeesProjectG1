@@ -1,9 +1,12 @@
 package com.sparta.g1;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusListener;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -19,12 +22,11 @@ public class AppWindow extends JFrame implements ActionListener {
     JTextField employeeNameSearchField = new JTextField(10);
     JTextField searchFieldMinAge = new JTextField(10);
     JTextField searchFieldMaxAge = new JTextField(10);
-    JTextField searchFieldFive = new JTextField(10);
-    JTextField searchFieldSix = new JTextField(10);
+    JTextField searchFieldStartDate = new JTextField(10);
+    JTextField searchFieldEndDate = new JTextField(10);
     JTextArea searchResults = new JTextArea();
     ScrollPane searchScroll = new ScrollPane();
     JPanel topPanel = new JPanel();
-    JPanel middlePanel = new JPanel();
     JPanel searchPanel = new JPanel();
     JPanel oneSearchPanel = new JPanel();
     JPanel twoSearchPanel = new JPanel();
@@ -32,7 +34,6 @@ public class AppWindow extends JFrame implements ActionListener {
     JPanel fourSearchPanel = new JPanel();
     CardLayout searchLayout = new CardLayout();
     ButtonGroup topPanelButtons = new ButtonGroup();
-
 
     HashSet<Employee> employeeList = new HashSet<>(EmployeeDataConverter.getListOfEmployees());
     EmployeeDAOImpl employeeDAO = new EmployeeDAOImpl(employeeList);
@@ -48,14 +49,13 @@ public class AppWindow extends JFrame implements ActionListener {
         setTitle("Employee Search");
         setResizable(false);
 
-
         addWindowComponents();
         setVisible(true);
 
     }
-
     private void addWindowComponents(){
 
+        setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
         //Top Panel
         idSearch.addActionListener(this);
         lastNameSearch.addActionListener(this);
@@ -72,7 +72,7 @@ public class AppWindow extends JFrame implements ActionListener {
         topPanel.add(ageRangeSearch);
 
         topPanel.setLayout(new FlowLayout());
-        this.add(topPanel, BorderLayout.NORTH);
+        this.add(topPanel);
 
         searchPanel.setLayout(searchLayout);
 
@@ -88,28 +88,32 @@ public class AppWindow extends JFrame implements ActionListener {
         threeSearchPanel.add(searchFieldMaxAge);
 
         fourSearchPanel.add(new JLabel("Date Start"));
-        fourSearchPanel.add(searchFieldFive);
+        fourSearchPanel.add(searchFieldStartDate);
         fourSearchPanel.add(new JLabel("Date End"));
-        fourSearchPanel.add(searchFieldSix);
+        fourSearchPanel.add(searchFieldEndDate);
+
+        searchFieldStartDate.setText("MM/DD/YYYY");
+        searchFieldEndDate.setText("MM/DD/YYYY");
 
         searchPanel.add(oneSearchPanel, "ID");
         searchPanel.add(twoSearchPanel, "Name");
         searchPanel.add(threeSearchPanel,"Age");
         searchPanel.add(fourSearchPanel, "HireDate");
 
-        this.add(searchPanel, BorderLayout.CENTER);
+
+        this.add(searchPanel);
 
         searchResults.setLineWrap(true);
         searchResults.setWrapStyleWord(true);
 
         searchScroll.add(searchResults);
+        searchScroll.setSize(400,600);
 
-        this.add(searchScroll, BorderLayout.AFTER_LAST_LINE);
-        this.add(goButton,BorderLayout.AFTER_LINE_ENDS);
+        this.add(searchScroll);
+        this.add(goButton);
 
         goButton.addActionListener(this);
     }
-
     public void actionPerformed(ActionEvent event){
         Object source = event.getSource();
 
@@ -144,7 +148,6 @@ public class AppWindow extends JFrame implements ActionListener {
                 }
             }
 
-
             else if(lastNameSearch.isSelected()){
                 if(employeeNameSearchField.getText().isEmpty() || employeeNameSearchField.getText().length()>20){
                     JOptionPane.showMessageDialog(this,"Please enter a valid name.");
@@ -155,6 +158,28 @@ public class AppWindow extends JFrame implements ActionListener {
                         searchResults.setText("Number of records returned that partially match: '" + employeeNameSearchField.getText() +"' is: " + nameSearch.size()+ "\n");
                         for(Employee employee : nameSearch){
                             searchResults.append("ID: "+ employee.empId() + ", First Name: " + employee.firstName() +", Last Name: " + employee.lastName() +  ", Email: " + employee.email() + "\n");
+                        }
+                        dialogPopupSuccess();
+                    }
+                    else {
+                        searchResults.setText("No records found.");
+                    }
+                }
+            }
+
+            else if(dateRangeSearch.isSelected()){
+                LocalDate startDate = LocalDate.parse(searchFieldStartDate.getText(), DataSanitisation.formatDates());
+                LocalDate endDate = LocalDate.parse((searchFieldEndDate).getText(), DataSanitisation.formatDates());
+
+                if(startDate.isAfter(endDate)){
+                    searchResults.setText("Please pick a start date before the end date.");
+                }
+                else{
+                    ArrayList<Employee> dateRangeSearch = new ArrayList<>(employeeDAO.searchByHireDateRange(startDate,endDate));
+                    if(!dateRangeSearch.isEmpty()){
+                        searchResults.setText("Number of records returned between age range of " +searchFieldMinAge.getText()+ " and " +searchFieldMaxAge.getText() + ": " + dateRangeSearch.size()+ "\n");
+                        for(Employee employee : dateRangeSearch){
+                            searchResults.append("ID: "+ employee.empId() + ", First Name: " + employee.firstName() +", Last Name: " + employee.lastName() +  ", Email: " + employee.email() + ", Join Date: " + employee.dateOfJoining() + "\n");
                         }
                         dialogPopupSuccess();
                     }
@@ -186,19 +211,9 @@ public class AppWindow extends JFrame implements ActionListener {
                     }
                 }
             }
-
-
-            //todo check for valid inputs, and display search results, convert dates to valid dates for search
-
-//            ArrayList<Employee> ageRangeSearch = new ArrayList<>(employeeDAO.searchByAgeRange(20,30));
-//            if(!ageRangeSearch.isEmpty()){
-//                for(Employee employee : ageRangeSearch){
-//                    searchResults.append(employee.toString() + "\n");
-//                }
-//                dialogPopupSuccess();
-//            }
         }
     }
+
     private void dialogPopupSuccess(){
         JDialog successPopup = new JDialog(this,"Dialog Box");
         successPopup.setSize(350,100);
