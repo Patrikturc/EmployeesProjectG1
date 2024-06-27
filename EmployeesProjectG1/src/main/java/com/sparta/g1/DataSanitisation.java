@@ -15,6 +15,7 @@ public class DataSanitisation {
             return false;
         }
     }
+
     public static boolean isValidEmail (String email){
         if (email.matches("^([a-zA-Z0-9_\\-.]+)@([a-zA-Z0-9_\\-.]+)\\.([a-zA-Z]{2,5})$")){
             return true;
@@ -26,6 +27,16 @@ public class DataSanitisation {
 
     public static boolean checkEmpIdIsCorrectLength (String empId){
         if (empId.length() == 6) {
+
+            return true;
+        } else {
+            numberOfCorruptedEntries++;
+            return false;
+        }
+    }
+
+    public static boolean checkDobIsBeforeDoj(Employee employee) {
+        if (employee.dob().isBefore(employee.dateOfJoining())) {
             return true;
         } else {
             numberOfCorruptedEntries++;
