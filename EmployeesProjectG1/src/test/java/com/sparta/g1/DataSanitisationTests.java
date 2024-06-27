@@ -32,4 +32,16 @@ public class DataSanitisationTests {
         //Assert
         Assertions.assertEquals(expected,actual);
     }
+
+    @Test
+    @DisplayName("Check if valid email string returns true")
+    public void checkIsValidEmailReturnsTrueOnValidEmailInput() {
+        String input = "email@email.com";
+//        Employee employee = new Employee("", "", "", "", "", "", input, "", "", "");
+        boolean expected = true;
+        boolean actual = DataSanitisation.isValidEmail(input);
+        Assertions.assertEquals(expected, actual);
+    }
 }
+
+
