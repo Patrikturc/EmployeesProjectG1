@@ -19,19 +19,15 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         this.employeeSet = new HashSet<>(employeeList);
     }
 
-
     public Employee searchById(String id) {
-        Employee foundEmployee = null;
-
-        for (Employee employee : employee) {
+        for (Employee employee : employeeSet) {
             if (employee.empId().equals(id)) {
-                foundEmployee = employee;
+                return employee;
             }
         }
-
-
-        return foundEmployee;
+        return null;
     }
+
     @Override
     public List<Employee> searchByLastName (String lastName){
         return employeeSet.stream().filter(employee -> employee.lastName().toLowerCase().contains(lastName.toLowerCase())).collect(Collectors.toList());
