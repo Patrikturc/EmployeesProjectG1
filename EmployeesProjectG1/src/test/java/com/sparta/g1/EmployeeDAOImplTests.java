@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Assertions;
 
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class EmployeeDAOImplTests {
@@ -34,5 +35,31 @@ public class EmployeeDAOImplTests {
     public void testSearchByIdNotFound() {
         Employee employee = employeeDAO.searchById("000000");
         Assertions.assertNull(employee);
+    }
+
+    @Test
+    public void testSearchByIdNullInput() {
+        Employee employee = employeeDAO.searchById(null);
+        Assertions.assertNull(employee);
+    }
+
+    @Test
+    public void testSearchByLastNameExactMatch() {
+        List<Employee> employees = employeeDAO.searchByLastName("Rojo");
+        Assertions.assertEquals(1, employees.size());
+        Assertions.assertEquals("Juliette", employees.getFirst().firstName());
+    }
+
+    @Test
+    public void testSearchByLastNameCaseInsensitive() {
+        List<Employee> employees = employeeDAO.searchByLastName("rojo");
+        Assertions.assertEquals(1, employees.size());
+        Assertions.assertEquals("Juliette", employees.get(0).firstName());
+    }
+
+    @Test
+    public void testSearchByLastNameNoMatch() {
+        List<Employee> employees = employeeDAO.searchByLastName("Smith");
+        Assertions.assertTrue(employees.isEmpty());
     }
 }
