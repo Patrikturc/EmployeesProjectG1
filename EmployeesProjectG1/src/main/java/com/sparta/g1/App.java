@@ -14,9 +14,11 @@ import java.util.stream.Collectors;
 //This is a comment left by kian
 public class App {
     public static void main(String[] args) {
-        final Logger logger = AppLogger.getLogger(Level.ALL, Level.INFO, true);
-        logger.log(Level.INFO, "Entered main method");
-        DataSanitisation.checkValidGender("L");
-        DataSanitisation.checkValidGender("M");
+        try {
+            AppWindow appWindow = new AppWindow();
+        }
+        catch (IOException e){
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -23,22 +23,23 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         this.employeeSet = new HashSet<>(employeeList);
     }
 
-
     public Employee searchById(String id) {
         logger.log(Level.FINER, "Entered search by id method");
 
         Employee foundEmployee = null;
 
-        for (Employee employee : employee) {
+        for (Employee employee : employeeSet) {
             if (employee.empId().equals(id)) {
-                foundEmployee = employee;
+                return employee;
             }
         }
 
         logger.log(Level.FINER, "Exited search by id method");
 
         return foundEmployee;
+
     }
+
     @Override
     public List<Employee> searchByLastName (String lastName){
         logger.log(Level.FINER, "Entered search by last name method");

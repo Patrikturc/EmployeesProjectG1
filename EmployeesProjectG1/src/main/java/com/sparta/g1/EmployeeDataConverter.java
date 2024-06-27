@@ -32,6 +32,7 @@ public class EmployeeDataConverter {
 
         String[] parts = data.split(",");
         if (parts.length != 10) throw new IllegalArgumentException("Invalid data format");
+
         else if(!DataSanitisation.checkEmpIdIsCorrectLength(String.valueOf(Integer.parseInt(parts[0])))){
             logger.log(Level.FINER, "Exited create employee from data method with null return");
             return null;
@@ -49,7 +50,7 @@ public class EmployeeDataConverter {
             return null;
         }
         else {
-            String empID = String.valueOf(Integer.parseInt(parts[0]));
+            String empID = parts[0];
             String prefix = parts[1];
             String firstName = parts[2];
             String middleInitial = String.valueOf(parts[3].charAt(0));
