@@ -129,13 +129,22 @@ public class AppWindow extends JFrame implements ActionListener {
         else if (source==goButton) {
 
             if(idSearch.isSelected()){
-                ArrayList<Employee> ageRangeSearch = new ArrayList<>(employeeDAO.searchByAgeRange(20,30));
-                if(!ageRangeSearch.isEmpty()){
-                    for(Employee employee : ageRangeSearch){
-                        searchResults.append(employee.toString() + "\n");
+
+                if(employeeIdSearchField.getText().length()==6){
+                    Employee employee = employeeDAO.searchById(employeeIdSearchField.getText());
+                    if(employee == null){
+                        searchResults.setText("No employee found matching: " + employeeIdSearchField.getText());
                     }
-                    dialogPopupSuccess();
-                }}
+                    else{
+                        searchResults.setText("ID: "+ employee.empId() + ", First Name: " + employee.firstName() +", Last Name: " + employee.lastName() +  ", Email: " + employee.email() + "\n");
+                    }
+                }
+                else{
+                    JOptionPane.showMessageDialog(this,"Please enter a valid ID that is 6 characters long.");
+                }
+            }
+
+
             else if(lastNameSearch.isSelected()){
                 if(employeeNameSearchField.getText().isEmpty() || employeeNameSearchField.getText().length()>20){
                     JOptionPane.showMessageDialog(this,"Please enter a valid name.");
@@ -178,6 +187,7 @@ public class AppWindow extends JFrame implements ActionListener {
                 }
             }
 
+
             //todo check for valid inputs, and display search results, convert dates to valid dates for search
 
 //            ArrayList<Employee> ageRangeSearch = new ArrayList<>(employeeDAO.searchByAgeRange(20,30));
@@ -187,7 +197,6 @@ public class AppWindow extends JFrame implements ActionListener {
 //                }
 //                dialogPopupSuccess();
 //            }
-
         }
     }
     private void dialogPopupSuccess(){
