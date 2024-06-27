@@ -5,17 +5,26 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 public class EmployeeDAOImpl implements EmployeeDAO {
 
     private ArrayList<Employee> employee = new ArrayList<>();
+  ;
+    private Set<Employee> employeeSet;
+
+    public EmployeeDAOImpl(Set<Employee> employeeList) {
+        this.employeeSet = new HashSet<>(employeeList);
+    }
+
 
     public Employee searchById(String id) {
         Employee foundEmployee = null;
 
         for (Employee employee : employee) {
-            if (employee.getID().equals(id)) {
+            if (employee.empId().equals(id)) {
                 foundEmployee = employee;
             }
         }
@@ -23,30 +32,21 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
         return foundEmployee;
     }
-
+    @Override
     public List<Employee> searchByLastName (String lastName){
-        List<Employee> employeeList = new ArrayList<>();
-        for (Employee employee : employee) {
-
-            if (employee.lastName()
-                    .toLowerCase()
-                    .contains(lastName.toLowerCase())) {
-                employeeList.add(employee);
-            }
-        }
-        return employeeList;
+        return employeeSet.stream().filter(employee -> employee.lastName().toLowerCase().contains(lastName.toLowerCase())).collect(Collectors.toList());
     }
 
+    @Override
     public List<Employee> searchByHireDateRange(LocalDate startDate, LocalDate endDate){
-        return null;
+        return employeeSet.stream().filter(employee -> !employee.dateOfJoining().isBefore(startDate) && !employee.dateOfJoining().isAfter(endDate)).collect(Collectors.toList());
     }
 
     public List<Employee> searchByAgeRange(int minAge, int maxAge) {
         List<Employee> employeeList = new ArrayList<>();
-
         LocalDate currentDate = LocalDate.now();
 
-        for (Employee employee : employee) {
+        for (Employee employee : employeeSet) {
             int employeeAge = currentDate.getYear() - employee.dob().getYear();
             if (employeeAge >= minAge && employeeAge <= maxAge) {
                 employeeList.add(employee);
