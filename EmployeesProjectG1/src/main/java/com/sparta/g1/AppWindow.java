@@ -12,11 +12,11 @@ public class AppWindow extends JFrame implements ActionListener {
     private int windowWidth;
     JButton goButton = new JButton("Go");
     JRadioButton idSearch = new JRadioButton("Search by ID");
-    JRadioButton lastNameSearch = new JRadioButton("Search by last name");
-    JRadioButton dateRangeSearch = new JRadioButton("Search by hire date");
+    JRadioButton lastNameSearch = new JRadioButton("Search by Last Name");
+    JRadioButton dateRangeSearch = new JRadioButton("Search by Hire Date");
     JRadioButton ageRangeSearch = new JRadioButton("Search by Age");
     JTextField employeeIdSearchField = new JTextField(10);
-    JTextField searchFieldTwo = new JTextField(10);
+    JTextField employeeNameSearchField = new JTextField(10);
     JTextField searchFieldMinAge = new JTextField(10);
     JTextField searchFieldMaxAge = new JTextField(10);
     JTextField searchFieldFive = new JTextField(10);
@@ -80,7 +80,7 @@ public class AppWindow extends JFrame implements ActionListener {
         oneSearchPanel.add(employeeIdSearchField);
 
         twoSearchPanel.add(new JLabel("Employee Last Name"));
-        twoSearchPanel.add(searchFieldTwo);
+        twoSearchPanel.add(employeeNameSearchField);
 
         threeSearchPanel.add(new JLabel("Minimum Age"));
         threeSearchPanel.add(searchFieldMinAge);
@@ -125,6 +125,7 @@ public class AppWindow extends JFrame implements ActionListener {
         else if (source == dateRangeSearch){
             searchLayout.show(searchPanel,"HireDate");
         }
+
         else if (source==goButton) {
 
             if(idSearch.isSelected()){
@@ -135,14 +136,45 @@ public class AppWindow extends JFrame implements ActionListener {
                     }
                     dialogPopupSuccess();
                 }}
-            else if (ageRangeSearch.isSelected()) {
-                ArrayList<Employee> ageRangeSearch = new ArrayList<>(employeeDAO.searchByAgeRange(Integer.parseInt(searchFieldMinAge.getText()),Integer.parseInt(searchFieldMaxAge.getText())));
-                if(!ageRangeSearch.isEmpty()){
-                    searchResults.setText("");
-                    for(Employee employee : ageRangeSearch){
-                        searchResults.append(employee.toString() + "\n");
+            else if(lastNameSearch.isSelected()){
+                if(employeeNameSearchField.getText().isEmpty() || employeeNameSearchField.getText().length()>20){
+                    JOptionPane.showMessageDialog(this,"Please enter a valid name.");
+                }
+                else{
+                    ArrayList<Employee> nameSearch = new ArrayList<>(employeeDAO.searchByLastName(employeeNameSearchField.getText()));
+                    if(!nameSearch.isEmpty()){
+                        searchResults.setText("Number of records returned that partially match: '" + employeeNameSearchField.getText() +"' is: " + nameSearch.size()+ "\n");
+                        for(Employee employee : nameSearch){
+                            searchResults.append("ID: "+ employee.empId() + ", First Name: " + employee.firstName() +", Last Name: " + employee.lastName() +  ", Email: " + employee.email() + "\n");
+                        }
+                        dialogPopupSuccess();
                     }
-                    dialogPopupSuccess();
+                    else {
+                        searchResults.setText("No records found.");
+                    }
+                }
+            }
+            else if (ageRangeSearch.isSelected()) {
+
+                if((searchFieldMinAge.getText().isEmpty() || searchFieldMaxAge.getText().isEmpty())
+                        || (getMinAgeFieldTextNumber()>getMaxAgeFieldTextNumber())
+                        || (getMinAgeFieldTextNumber()<0 || getMinAgeFieldTextNumber()> 120)
+                        || (getMaxAgeFieldTextNumber()<0 || getMaxAgeFieldTextNumber()> 120)
+                ){
+                    JOptionPane.showMessageDialog(this,"Please enter valid ages.");
+                }
+                else {
+                    ArrayList<Employee> ageRangeSearch = new ArrayList<>(employeeDAO.searchByAgeRange(Integer.parseInt(searchFieldMinAge.getText()),Integer.parseInt(searchFieldMaxAge.getText())));
+                    if(!ageRangeSearch.isEmpty()){
+                        searchResults.setText("Number of records returned between age range of " +searchFieldMinAge.getText()+ " and " +searchFieldMaxAge.getText() + ": " + ageRangeSearch.size()+ "\n");
+                        for(Employee employee : ageRangeSearch){
+                            searchResults.append("ID: "+ employee.empId() + ", First Name: " + employee.firstName() +", Last Name: " + employee.lastName() +  ", Email: " + employee.email() + ", DoB: " + employee.dob() + "\n");
+                        }
+                        dialogPopupSuccess();
+                    }
+                    else {
+                        searchResults.setText("No records found.");
+                    }
                 }
             }
 
@@ -173,5 +205,10 @@ public class AppWindow extends JFrame implements ActionListener {
         successPopup.requestFocus();
         successPopup.setVisible(true);
     }
-
+    private int getMinAgeFieldTextNumber(){
+        return Integer.parseInt(searchFieldMinAge.getText());
+    }
+    private int getMaxAgeFieldTextNumber(){
+        return Integer.parseInt(searchFieldMaxAge.getText());
+    }
 }
