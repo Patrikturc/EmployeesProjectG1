@@ -21,16 +21,13 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 
     public Employee searchById(String id) {
-        Employee foundEmployee = null;
-
-        for (Employee employee : employee) {
+        for (Employee employee : employeeSet) {
             if (employee.empId().equals(id)) {
-                foundEmployee = employee;
+                return employee;
             }
         }
 
-
-        return foundEmployee;
+        return null;
     }
     @Override
     public List<Employee> searchByLastName (String lastName){
