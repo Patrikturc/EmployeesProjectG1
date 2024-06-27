@@ -90,5 +90,18 @@ public class EmployeeDAOImplTests {
         Assertions.assertEquals("338634", employees.getFirst().empId());
     }
 
+    @Test
+    public void testSearchByAgeRange() {
+        // Set the age range from 1959 to 1961
+        int minAge = 1959;
+        int maxAge = 1961;
 
+        List<Employee> employees = employeeDAO.searchByAgeRange(minAge, maxAge);
+
+        // Assert that only one employee is returned
+        Assertions.assertEquals(1, employees.size());
+
+        // Assert that the returned employee has ID "338634"
+        Assertions.assertEquals("338634", employees.get(0).empId());
+    }
 }
