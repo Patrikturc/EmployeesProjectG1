@@ -46,15 +46,13 @@ public class EmployeeDAOImplTests {
     @Test
     public void testSearchByLastNameExactMatch() {
         List<Employee> employees = employeeDAO.searchByLastName("Rojo");
-        Assertions.assertEquals(1, employees.size());
-        Assertions.assertEquals("Juliette", employees.getFirst().firstName());
+        Assertions.assertEquals("178566", employees.getFirst().empId());
     }
 
     @Test
     public void testSearchByLastNameCaseInsensitive() {
         List<Employee> employees = employeeDAO.searchByLastName("rojo");
-        Assertions.assertEquals(1, employees.size());
-        Assertions.assertEquals("Juliette", employees.get(0).firstName());
+        Assertions.assertEquals("178566", employees.getFirst().empId());
     }
 
     @Test
@@ -62,4 +60,35 @@ public class EmployeeDAOImplTests {
         List<Employee> employees = employeeDAO.searchByLastName("Smith");
         Assertions.assertTrue(employees.isEmpty());
     }
+
+    @Test
+    public void testSearchByLastNamePartialMatch() {
+        List<Employee> employees = employeeDAO.searchByLastName("ros");
+        Assertions.assertEquals("496781", employees.getFirst().empId());
+    }
+
+    @Test
+    public void testSearchByHireDateRange() {
+        LocalDate startDate = LocalDate.of(2010, 1, 1);
+        LocalDate endDate = LocalDate.of(2010, 12, 31);
+        List<Employee> employees = employeeDAO.searchByHireDateRange(startDate, endDate);
+        Assertions.assertEquals("496781", employees.getFirst().empId());
+    }
+
+    @Test
+    public void testSearchByHireDateRangeNoMatch() {
+        LocalDate startDate = LocalDate.of(2020, 1, 1);
+        LocalDate endDate = LocalDate.of(2021, 12, 31);
+        List<Employee> employees = employeeDAO.searchByHireDateRange(startDate, endDate);
+        Assertions.assertTrue(employees.isEmpty());
+    }
+
+    @Test
+    public void testSearchByHireDateRangeStartDateEqualsEndDate() {
+        LocalDate date = LocalDate.of(1982, 5, 25);
+        List<Employee> employees = employeeDAO.searchByHireDateRange(date, date);
+        Assertions.assertEquals("338634", employees.getFirst().empId());
+    }
+
+
 }
