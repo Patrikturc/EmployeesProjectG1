@@ -27,16 +27,15 @@ public class App {
 //        result.forEach(employeeDTO -> System.out.println(employeeDTO.firstName() + " " + employeeDTO.lastName() + " " + employeeDTO.dateOfJoining()));
 
         AppWindow appWindow = new AppWindow();
-
-        HashSet<Employee> employeeList = new HashSet<>(EmployeeDataConverter.getListOfEmployees());
-        System.out.println("Number of valid entries: " + employeeList.size());
-        System.out.println("Number of corrupted entries: " + DataSanitisation.getNumberOfCorruptedEntries());
-
-        EmployeeDAOImpl employeeDAO = new EmployeeDAOImpl(employeeList);
-        ArrayList<Employee> lastNameSearch = new ArrayList<>(employeeDAO.searchByLastName("sm"));
-        System.out.println(lastNameSearch);
-        ArrayList<Employee> ageRangeSearch = new ArrayList<>(employeeDAO.searchByAgeRange(20,30));
-        System.out.println(ageRangeSearch);
-
+//
+//        HashSet<Employee> employeeList = new HashSet<>(EmployeeDataConverter.getListOfEmployees());
+//        System.out.println("Number of valid entries: " + employeeList.size());
+//        System.out.println("Number of corrupted entries: " + DataSanitisation.getNumberOfCorruptedEntries());
+//
+//        EmployeeDAOImpl employeeDAO = new EmployeeDAOImpl(employeeList);
+//        ArrayList<Employee> lastNameSearch = new ArrayList<>(employeeDAO.searchByLastName("sm"));
+//        System.out.println(lastNameSearch);
+//        ArrayList<Employee> ageRangeSearch = new ArrayList<>(employeeDAO.searchByAgeRange(20,30));
+//        System.out.println(ageRangeSearch);
     }
 }
