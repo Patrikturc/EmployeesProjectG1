@@ -144,6 +144,7 @@ public class AppWindow extends JFrame implements ActionListener {
                     }
                     else{
                         searchResults.setText("ID: "+ employee.empId() + ", First Name: " + employee.firstName() +", Last Name: " + employee.lastName() +  ", Email: " + employee.email() + "\n");
+                        JOptionPane.showMessageDialog(this,popupMessage());
                     }
                 }
                 else{
@@ -163,7 +164,7 @@ public class AppWindow extends JFrame implements ActionListener {
                         for(Employee employee : nameSearch){
                             searchResults.append("ID: "+ employee.empId() + ", First Name: " + employee.firstName() +", Last Name: " + employee.lastName() +  ", Email: " + employee.email() + "\n");
                         }
-                        dialogPopupSuccess();
+                        JOptionPane.showMessageDialog(this,popupMessage());
                     }
                     else {
                         searchResults.setText("No records found for " + "'" + partialNameSearch + "'");
@@ -172,24 +173,31 @@ public class AppWindow extends JFrame implements ActionListener {
             }
 
             else if(dateRangeSearch.isSelected()){
-                LocalDate startDate = LocalDate.parse(searchFieldStartDate.getText(), DataSanitisation.formatDates());
-                LocalDate endDate = LocalDate.parse((searchFieldEndDate).getText(), DataSanitisation.formatDates());
+                String date1 = searchFieldStartDate.getText();
+                String date2 = searchFieldEndDate.getText();
 
-                if(startDate.isAfter(endDate)){
-                    searchResults.setText("Please pick a start date before the end date.");
+                if(FieldChecks.hasValidDates(date1,date2)) {
+
+                    LocalDate startDate = LocalDate.parse(date1, DataSanitisation.formatDates());
+                    LocalDate endDate = LocalDate.parse(date2, DataSanitisation.formatDates());
+
+                    if (startDate.isAfter(endDate)) {
+                        JOptionPane.showMessageDialog(this,"Please enter a valid date range!");
+                    } else {
+                        ArrayList<Employee> dateRangeSearch = new ArrayList<>(employeeDAO.searchByHireDateRange(startDate, endDate));
+                        if (!dateRangeSearch.isEmpty()) {
+                            searchResults.setText("Number of records returned between hire date range of " + date1 + " and " + date2 + ": " + dateRangeSearch.size() + "\n");
+                            for (Employee employee : dateRangeSearch) {
+                                searchResults.append("ID: " + employee.empId() + ", First Name: " + employee.firstName() + ", Last Name: " + employee.lastName() + ", Email: " + employee.email() + ", Join Date: " + employee.dateOfJoining() + "\n");
+                            }
+                            JOptionPane.showMessageDialog(this,popupMessage());
+                        } else {
+                            searchResults.setText("No records found.");
+                        }
+                    }
                 }
                 else{
-                    ArrayList<Employee> dateRangeSearch = new ArrayList<>(employeeDAO.searchByHireDateRange(startDate,endDate));
-                    if(!dateRangeSearch.isEmpty()){
-                        searchResults.setText("Number of records returned between age range of " +searchFieldMinAge.getText()+ " and " +searchFieldMaxAge.getText() + ": " + dateRangeSearch.size()+ "\n");
-                        for(Employee employee : dateRangeSearch){
-                            searchResults.append("ID: "+ employee.empId() + ", First Name: " + employee.firstName() +", Last Name: " + employee.lastName() +  ", Email: " + employee.email() + ", Join Date: " + employee.dateOfJoining() + "\n");
-                        }
-                        dialogPopupSuccess();
-                    }
-                    else {
-                        searchResults.setText("No records found.");
-                    }
+                    JOptionPane.showMessageDialog(this,"Please enter a valid date range!");
                 }
             }
             else if (ageRangeSearch.isSelected()) {
@@ -205,7 +213,7 @@ public class AppWindow extends JFrame implements ActionListener {
                         for(Employee employee : ageRangeSearch){
                             searchResults.append("ID: "+ employee.empId() + ", First Name: " + employee.firstName() +", Last Name: " + employee.lastName() +  ", Email: " + employee.email() + ", DoB: " + employee.dob() + "\n");
                         }
-                        dialogPopupSuccess();
+                        JOptionPane.showMessageDialog(this,popupMessage());
                     }
                     else {
                         searchResults.setText("No records found.");
@@ -215,21 +223,30 @@ public class AppWindow extends JFrame implements ActionListener {
         }
     }
 
-    private void dialogPopupSuccess(){
-        JDialog successPopup = new JDialog(this,"Dialog Box");
-        successPopup.setSize(350,100);
-        JLabel label = new JLabel();
+    private String popupMessage(){
         if(DataSanitisation.getNumberOfCorruptedEntries()== 0 || DataSanitisation.getNumberOfCorruptedEntries()>1){
-            label.setText("Query ran successfully with " +  DataSanitisation.getNumberOfCorruptedEntries() + " corrupted entries found.");
+            return "Query ran successfully with " +  DataSanitisation.getNumberOfCorruptedEntries() + " corrupted entries found.";
         }
         else{
-            label.setText("Query ran successfully with " +  DataSanitisation.getNumberOfCorruptedEntries() + " corrupted entry found.");
+            return ("Query ran successfully with " +  DataSanitisation.getNumberOfCorruptedEntries() + " corrupted entry found.");
         }
-        successPopup.add(label);
-        successPopup.setLocationRelativeTo(null);
-        successPopup.requestFocus();
-        successPopup.setVisible(true);
     }
+
+//    private void dialogPopupSuccess(){
+//        JDialog successPopup = new JDialog(this,"Dialog Box");
+//        successPopup.setSize(350,100);
+//        JLabel label = new JLabel();
+//        if(DataSanitisation.getNumberOfCorruptedEntries()== 0 || DataSanitisation.getNumberOfCorruptedEntries()>1){
+//            label.setText("Query ran successfully with " +  DataSanitisation.getNumberOfCorruptedEntries() + " corrupted entries found.");
+//        }
+//        else{
+//            label.setText("Query ran successfully with " +  DataSanitisation.getNumberOfCorruptedEntries() + " corrupted entry found.");
+//        }
+//        successPopup.add(label);
+//        successPopup.setLocationRelativeTo(null);
+//        successPopup.requestFocus();
+//        successPopup.setVisible(true);
+//    }
     private int getMinAgeFieldTextNumber(){
         return Integer.parseInt(searchFieldMinAge.getText());
     }
