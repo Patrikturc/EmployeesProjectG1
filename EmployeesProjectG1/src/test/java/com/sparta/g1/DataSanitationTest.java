@@ -10,9 +10,9 @@ public class DataSanitationTest {
     @DisplayName("Check if valid email string returns true")
     public void checkIsValidEmailReturnsTrueOnValidEmailInput() {
         String input = "email@email.com";
-        Employee employee = new Employee("", "", "", "", "", "", input, "", "", "");
+//        Employee employee = new Employee("", "", "", "", "", "", input, "", "", "");
         boolean expected = true;
-        boolean actual = DataSanitisation.isValidEmail(employee);
+        boolean actual = DataSanitisation.isValidEmail(input);
         Assertions.assertEquals(expected, actual);
     }
 
