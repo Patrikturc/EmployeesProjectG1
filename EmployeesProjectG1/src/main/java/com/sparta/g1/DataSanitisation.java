@@ -15,10 +15,7 @@ public class DataSanitisation {
             return false;
         }
     }
-<<<<<<< dev-kian
-=======
 
->>>>>>> dev
     public static boolean isValidEmail (String email){
         if (email.matches("^([a-zA-Z0-9_\\-.]+)@([a-zA-Z0-9_\\-.]+)\\.([a-zA-Z]{2,5})$")){
             return true;
@@ -27,11 +24,6 @@ public class DataSanitisation {
             return false;
         }
     }
-<<<<<<< dev-kian
-
-    public static boolean checkEmpIdIsCorrectLength (String empId){
-        if (empId.length() == 6) {
-=======
 
     public static boolean checkEmpIdIsCorrectLength (String empId){
         if (empId.length() == 6) {
@@ -45,14 +37,12 @@ public class DataSanitisation {
 
     public static boolean checkDobIsBeforeDoj(Employee employee) {
         if (employee.dob().isBefore(employee.dateOfJoining())) {
->>>>>>> dev
             return true;
         } else {
             numberOfCorruptedEntries++;
             return false;
         }
     }
-<<<<<<< dev-kian
 
     public static boolean isValidSalary(String salary){
         if(Integer.parseInt(salary)<0){
@@ -63,20 +53,6 @@ public class DataSanitisation {
     }
 
     public static int getNumberOfCorruptedEntries () {
-=======
-    public static int getNumberOfCorruptedEntries() {
-
-    public static boolean isValidSalary(String salary){
-        if(Integer.parseInt(salary)<0){
-            numberOfCorruptedEntries++;
-            return false;
-        }
-        return true;
-    }
-
-    public static int getNumberOfCorruptedEntries () {
-
->>>>>>> dev
         return numberOfCorruptedEntries;
     }
 
