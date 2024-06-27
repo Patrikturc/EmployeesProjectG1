@@ -26,6 +26,8 @@ public class App {
 //        List<Employee> result = employeeDAO.searchByHireDateRange(startDate, endDate);
 //        result.forEach(employeeDTO -> System.out.println(employeeDTO.firstName() + " " + employeeDTO.lastName() + " " + employeeDTO.dateOfJoining()));
 
+        AppWindow appWindow = new AppWindow();
+
         HashSet<Employee> employeeList = new HashSet<>(EmployeeDataConverter.getListOfEmployees());
         System.out.println("Number of valid entries: " + employeeList.size());
         System.out.println("Number of corrupted entries: " + DataSanitisation.getNumberOfCorruptedEntries());
