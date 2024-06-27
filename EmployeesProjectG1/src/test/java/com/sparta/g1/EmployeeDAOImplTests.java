@@ -92,16 +92,25 @@ public class EmployeeDAOImplTests {
 
     @Test
     public void testSearchByAgeRange() {
-        // Set the age range from 1959 to 1961
-        int minAge = 1959;
-        int maxAge = 1961;
-
+        int minAge = LocalDate.now().getYear() - 1961;
+        int maxAge = LocalDate.now().getYear() - 1959;
         List<Employee> employees = employeeDAO.searchByAgeRange(minAge, maxAge);
+        Assertions.assertEquals("338634", employees.getFirst().empId());
+    }
 
-        // Assert that only one employee is returned
-        Assertions.assertEquals(1, employees.size());
+    @Test
+    public void testSearchByAgeRangeReturnMultiple() {
+        int minAge = LocalDate.now().getYear() - 1969;
+        int maxAge = LocalDate.now().getYear() - 1959;
+        List<Employee> employees = employeeDAO.searchByAgeRange(minAge, maxAge);
+        Assertions.assertEquals(2, employees.size());
+    }
 
-        // Assert that the returned employee has ID "338634"
-        Assertions.assertEquals("338634", employees.get(0).empId());
+    @Test
+    public void testSearchByAgeRangeNoMatch() {
+        int minAge = LocalDate.now().getYear() - 1940;
+        int maxAge = LocalDate.now().getYear() - 1950;
+        List<Employee> employees = employeeDAO.searchByAgeRange(minAge, maxAge);
+        Assertions.assertTrue(employees.isEmpty());
     }
 }
