@@ -22,24 +22,24 @@ public class DataSanitisationTests {
 
     @BeforeEach
     void setup() {
-        bibi = new Employee("744723", "Hon.", "Bibi", "H", "Paddock", "F", "bibi.paddock@yahoo.co.in", LocalDate.of(1991,10,20), LocalDate.of(2016,11,2), "87148" );
-        eric = new Employee("423093", "Mr.", "Eric", "O", "Manning", "M", "eric.manning@yahoo.com", LocalDate.of(1980,10,20), LocalDate.of(2002,11,2), "149363" );
-        Renetta = new Employee("207808", "Ms.", "Renetta", "T", "Hafner", "F", "renetta.hafner@aol.com", LocalDate.of(1975,10,20), LocalDate.of(1998,11,2), "189363" );
+        bibi = new Employee("744723", "Hon.", "Bibi", "H", "Paddock", "F", "bibi.paddock@yahoo.co.in", LocalDate.of(1991, 10, 20), LocalDate.of(2016, 11, 2), "87148");
+        eric = new Employee("423093", "Mr.", "Eric", "O", "Manning", "M", "eric.manning@yahoo.com", LocalDate.of(1980, 10, 20), LocalDate.of(2002, 11, 2), "149363");
+        Renetta = new Employee("207808", "Ms.", "Renetta", "T", "Hafner", "F", "renetta.hafner@aol.com", LocalDate.of(1975, 10, 20), LocalDate.of(1998, 11, 2), "189363");
         // Incorrect gender
-        john = new Employee("123456", "Mr.", "John", "D", "Doe", "X", "john.doe@gmail.com", LocalDate.of(1980,1,1), LocalDate.of(2000,1,1), "123456");
+        john = new Employee("123456", "Mr.", "John", "D", "Doe", "X", "john.doe@gmail.com", LocalDate.of(1980, 1, 1), LocalDate.of(2000, 1, 1), "123456");
         // Incorrect email
-        jane = new Employee("654321", "Ms.", "Jane", "D", "Doe", "F", "jane.doegmail.com", LocalDate.of(1985,1,1), LocalDate.of(2005,1,1), "654321");
+        jane = new Employee("654321", "Ms.", "Jane", "D", "Doe", "F", "jane.doegmail.com", LocalDate.of(1985, 1, 1), LocalDate.of(2005, 1, 1), "654321");
         // Incorrect employee ID length
-        bob = new Employee("7890", "Mr.", "Bob", "B", "Builder", "M", "bob.builder@gmail.com", LocalDate.of(1970,1,1), LocalDate.of(1990,1,1), "789012");
+        bob = new Employee("7890", "Mr.", "Bob", "B", "Builder", "M", "bob.builder@gmail.com", LocalDate.of(1970, 1, 1), LocalDate.of(1990, 1, 1), "789012");
         // Date of birth is not before date of joining
-        alice = new Employee("987654", "Ms.", "Alice", "A", "Adams", "F", "alice.adams@gmail.com", LocalDate.of(2000,1,1), LocalDate.of(1990,1,1), "987654");
+        alice = new Employee("987654", "Ms.", "Alice", "A", "Adams", "F", "alice.adams@gmail.com", LocalDate.of(2000, 1, 1), LocalDate.of(1990, 1, 1), "987654");
 
     }
 
 
     @Test
     @DisplayName("Given an employee has a negative salary then false should be returned")
-    void givenNegativeSalaryReturnFalse(){
+    void givenNegativeSalaryReturnFalse() {
         //Arrange
         boolean expected = false;
 
@@ -47,7 +47,7 @@ public class DataSanitisationTests {
         boolean actual = DataSanitisation.isValidSalary("-100000");
 
         //Assert
-        Assertions.assertEquals(expected,actual);
+        Assertions.assertEquals(expected, actual);
     }
 
     @Test
@@ -63,7 +63,7 @@ public class DataSanitisationTests {
     public void checkIdIsValidLength() {
         boolean expected = true;
         boolean actual = DataSanitisation.checkEmpIdIsCorrectLength(bibi.empId());
-        Assertions.assertEquals(expected,actual);
+        Assertions.assertEquals(expected, actual);
     }
 
     @Test
@@ -155,42 +155,43 @@ public class DataSanitisationTests {
         Assertions.assertEquals(expected, actual);
     }
 
-         @Test
-         @DisplayName("Check Invalid Day Of Month On Leap Year Returns False")
-          void checkInvalidDayOfMonthOnLeapYearReturnsFalse() {
+    @Test
+    @DisplayName("Check Invalid Day Of Month On Leap Year Returns False")
+    void checkInvalidDayOfMonthOnLeapYearReturnsFalse() {
         String input = "02/30/2020";
         Boolean expected = false;
         boolean actual = DataSanitisation.isDateOfJoiningValid(input);
         Assertions.assertEquals(expected, actual);
     }
 
-         @Test
-        @DisplayName("check Invalid Day Of Month Returns False For 30 Day Month")
-        void checkInvalidDayOfMonthReturnsFalseFor30DayMonth() {
+    @Test
+    @DisplayName("check Invalid Day Of Month Returns False For 30 Day Month")
+    void checkInvalidDayOfMonthReturnsFalseFor30DayMonth() {
         String input = "4/31/2020";
         Boolean expected = false;
         boolean actual = DataSanitisation.isDateOfJoiningValid(input);
         Assertions.assertEquals(expected, actual);
-         }
+    }
 
-         @Test
-         @DisplayName("check Valid Day Of Month On Leap Year Returns True")
-         void checkValidDayOfMonthOnLeapYearReturnsTrue() {
+    @Test
+    @DisplayName("check Valid Day Of Month On Leap Year Returns True")
+    void checkValidDayOfMonthOnLeapYearReturnsTrue() {
         String input = "02/29/2020";
         Boolean expected = true;
         boolean actual = DataSanitisation.isDateOfJoiningValid(input);
         Assertions.assertEquals(expected, actual);
 
-         }
+    }
 
-        @Test
-        @DisplayName("check Valid Day Of Month Returns True For 30 Day Month")
-        void checkValidDayOfMonthReturnsTrueFor30DayMonth() {
+    @Test
+    @DisplayName("check Valid Day Of Month Returns True For 30 Day Month")
+    void checkValidDayOfMonthReturnsTrueFor30DayMonth() {
         String input = "04/30/2020";
         Boolean expected = true;
         boolean actual = DataSanitisation.isDateOfJoiningValid(input);
         Assertions.assertEquals(expected, actual);
-        }
+    }
+}
 
 
 
