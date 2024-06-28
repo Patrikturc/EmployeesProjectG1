@@ -4,6 +4,9 @@
 # Log file
 *.log
 
+# Holds log files
+resources/
+
 # Package Files #
 *.jar
 *.war
@@ -51,3 +54,4 @@ out/
 
 # VS Code
 .vscode
+
