@@ -8,6 +8,8 @@ import org.junit.platform.engine.reporting.ReportEntry;
 
 import java.time.LocalDate;
 
+import static org.junit.jupiter.api.Assertions.fail;
+
 public class DataSanitisationTests {
     private Employee bibi;
     private Employee eric;
@@ -76,6 +78,43 @@ public class DataSanitisationTests {
     void checkInvalidDateOfJoiningReturnsFalse() {
         String input = "03/12/2025";
         Boolean expected = false;
+        boolean actual = DataSanitisation.isDateOfJoiningValid(input);
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("Check Invalid Day Of Month On Leap Year Returns False")
+    void checkInvalidDayOfMonthOnLeapYearReturnsFalse() {
+        String input = "02/30/2020";
+        Boolean expected = false;
+        boolean actual = DataSanitisation.isDateOfJoiningValid(input);
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("check Invalid Day Of Month Returns False For 30 Day Month")
+    void checkInvalidDayOfMonthReturnsFalseFor30DayMonth() {
+        String input = "4/31/2020";
+        Boolean expected = false;
+        boolean actual = DataSanitisation.isDateOfJoiningValid(input);
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("check Valid Day Of Month On Leap Year Returns True")
+    void checkValidDayOfMonthOnLeapYearReturnsTrue() {
+        String input = "02/29/2020";
+        Boolean expected = true;
+        boolean actual = DataSanitisation.isDateOfJoiningValid(input);
+        Assertions.assertEquals(expected, actual);
+
+    }
+
+    @Test
+    @DisplayName("check Valid Day Of Month Returns True For 30 Day Month")
+    void checkValidDayOfMonthReturnsTrueFor30DayMonth() {
+        String input = "04/30/2020";
+        Boolean expected = true;
         boolean actual = DataSanitisation.isDateOfJoiningValid(input);
         Assertions.assertEquals(expected, actual);
     }
