@@ -14,10 +14,13 @@ import java.util.stream.Collectors;
 
 public class App {
     public static void main(String[] args) {
+        final Logger logger = AppLogger.getLogger(Level.ALL, Level.INFO, true);
+
         try {
             AppWindow appWindow = new AppWindow();
         }
         catch (IOException e){
+            logger.log(Level.SEVERE, "Exception thrown when opening app window");
             throw new RuntimeException(e);
         }
     }

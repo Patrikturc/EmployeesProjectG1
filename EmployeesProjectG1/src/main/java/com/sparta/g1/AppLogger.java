@@ -27,6 +27,7 @@ public class AppLogger {
             fileHandler.setFormatter(new CustomFormatter());
             logger.addHandler(fileHandler);
         } catch(Exception e) {
+            logger.log(Level.SEVERE, "Exception when setting up file handler");
             throw new RuntimeException(e);
         }
 

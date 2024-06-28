@@ -38,7 +38,6 @@ public class AppWindow extends JFrame implements ActionListener {
     HashSet<Employee> employeeList = new HashSet<>(EmployeeDataConverter.getListOfEmployees());
     EmployeeDAOImpl employeeDAO = new EmployeeDAOImpl(employeeList);
 
-
     public AppWindow() throws IOException {
         int windowHeight = 800;
         int windowWidth = 800;
