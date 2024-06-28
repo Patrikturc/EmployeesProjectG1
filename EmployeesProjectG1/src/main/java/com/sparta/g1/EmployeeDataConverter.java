@@ -2,8 +2,6 @@ package com.sparta.g1;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,7 +30,8 @@ public class EmployeeDataConverter {
 
         String[] parts = data.split(",");
         if (parts.length != 10) throw new IllegalArgumentException("Invalid data format");
-        if (!isValidEmployeeDate(parts)) {
+        if (!isValidEmployee(parts)) {
+            logger.log(Level.FINEST, "Found another corrupt employee entry");
             return null;
         }
         String empID = String.valueOf(Integer.parseInt(parts[0]));
@@ -50,7 +49,9 @@ public class EmployeeDataConverter {
     }
 
 
-    private static boolean isValidEmployeeDate(String[] parts) {
+    private static boolean isValidEmployee(String[] parts) {
+        logger.log(Level.FINER, "Entered is valid employee method");
+        logger.log(Level.FINER, "Exited is valid employee method");
         return DataSanitisation.checkEmpIdIsCorrectLength(String.valueOf(Integer.parseInt(parts[0]))) &&
                 DataSanitisation.checkValidGender(String.valueOf(parts[5].charAt(0))) &&
                 DataSanitisation.isValidEmail(parts[6]) &&
