@@ -23,6 +23,8 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         this.employeeSet = new HashSet<>(employeeList);
     }
 
+
+    @Override
     public Employee searchById(String id) {
         logger.log(Level.FINER, "Entered search by id method");
 
@@ -54,6 +56,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         return employeeSet.stream().filter(employee -> !employee.dateOfJoining().isBefore(startDate) && !employee.dateOfJoining().isAfter(endDate)).collect(Collectors.toList());
     }
 
+    @Override
     public List<Employee> searchByAgeRange(int minAge, int maxAge) {
         logger.log(Level.FINER, "Entered search by age range method");
         List<Employee> employeeList = new ArrayList<>();
