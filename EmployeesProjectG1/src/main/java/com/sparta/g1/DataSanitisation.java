@@ -12,17 +12,6 @@ public class DataSanitisation {
 
     private static int numberOfCorruptedEntries = 0;
 
-    //1. isValidID
-    //2. isValidPrefix
-    //3. valid first name?
-    //4. valid middle initial
-    //5. valid last name
-    //6. isValidGender
-    //7. isValidEmail
-    //8. isValidDoB
-    //9. isValidDoJ
-    //10. isValidSalary
-
     public static boolean checkValidGender(String gender) {
         if (gender.equals("M") || gender.equals("F")) {
             return true;
