@@ -72,4 +72,106 @@ public class FieldChecksTests {
         boolean actual = FieldChecks.hasValidID(input);
         Assertions.assertEquals(expected,actual);
     }
+
+    @Test
+    void givenStringIfNumbersPresentReturnFalseForIsValidName() {
+        String input = "43asg432";
+        boolean expected = false;
+        boolean actual = FieldChecks.hasValidPartialName(input);
+        Assertions.assertEquals(expected, actual);
+    }
+    @Test
+    void givenStringIfNoNumbersPresentReturnTrueForIsValidName() {
+        String input = "jerry";
+        boolean expected = true;
+        boolean actual = FieldChecks.hasValidPartialName(input);
+        Assertions.assertEquals(expected, actual);
+    }
+    @Test
+    void givenStringLessThanEightReturnFalseForIsValidDate(){
+        String input = "jerry";
+        boolean expected = false;
+        boolean actual = FieldChecks.hasValidDates(input,input);
+        Assertions.assertEquals(expected, actual);
+    }
+    @Test
+    void givenStringOneLessThanEightReturnFalseForIsValidDate(){
+        String input = "jerry";
+        String input2 = "testingst";
+        boolean expected = false;
+        boolean actual = FieldChecks.hasValidDates(input,input2);
+        Assertions.assertEquals(expected, actual);
+    }
+    @Test
+    void givenStringOneMoreThanTenReturnFalseForIsValidDate(){
+        String input = "Velociraptor";
+        String input2 = "testingst";
+        boolean expected = false;
+        boolean actual = FieldChecks.hasValidDates(input,input2);
+        Assertions.assertEquals(expected, actual);
+    }
+    @Test
+    void givenStringWithDateInFormatYYYYMMDDReturnFalse(){
+        String input = "2005/10/21";
+        String input2 = "2007/10/21";
+        boolean expected = false;
+        boolean actual = FieldChecks.hasValidDates(input,input2);
+        Assertions.assertEquals(expected, actual);
+    }
+    @Test
+    void givenStringWithDateInFormatMMhyDDhyYYYYReturnFalse(){
+        String input = "11-14-2004";
+        String input2 = "12-10-2006";
+        boolean expected = false;
+        boolean actual = FieldChecks.hasValidDates(input,input2);
+        Assertions.assertEquals(expected, actual);
+    }
+    @Test
+    void givenStringWithDateInFormatMMDDYYYYReturnFalseIfDateInvalid(){
+        String input = "13/31/2004";
+        String input2 = "05/10/2006";
+        boolean expected = false;
+        boolean actual = FieldChecks.hasValidDates(input,input2);
+        Assertions.assertEquals(expected, actual);
+    }
+    @Test
+    void givenStringWithDateInFormatMMDDYYYYReturnTrueIfValid(){
+        String input = "12/31/2004";
+        String input2 = "05/10/2006";
+        boolean expected = true;
+        boolean actual = FieldChecks.hasValidDates(input,input2);
+        Assertions.assertEquals(expected, actual);
+    }
+    @Test
+    void givenStringWithDateInFormatMDDYYYYReturnTrueIfValid(){
+        String input = "1/31/2004";
+        String input2 = "3/10/2006";
+        boolean expected = true;
+        boolean actual = FieldChecks.hasValidDates(input,input2);
+        Assertions.assertEquals(expected, actual);
+    }
+    @Test
+    void givenStringWithDateInFormatMDYYYYReturnTrueIfValid(){
+        String input = "1/1/2004";
+        String input2 = "3/1/2006";
+        boolean expected = true;
+        boolean actual = FieldChecks.hasValidDates(input,input2);
+        Assertions.assertEquals(expected, actual);
+    }
+    @Test
+    void givenStringWithDateInFormatMMDYYYYReturnTrueIfValid(){
+        String input = "10/1/2004";
+        String input2 = "03/1/2006";
+        boolean expected = true;
+        boolean actual = FieldChecks.hasValidDates(input,input2);
+        Assertions.assertEquals(expected, actual);
+    }
+    @Test
+    void givenStringWithDatesInDifferentFormatsReturnTrueIfValid(){
+        String input = "1/1/2004";
+        String input2 = "03/12/2006";
+        boolean expected = true;
+        boolean actual = FieldChecks.hasValidDates(input,input2);
+        Assertions.assertEquals(expected, actual);
+    }
 }
