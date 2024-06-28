@@ -14,10 +14,6 @@ public class DataSanitisationTests {
     private Employee bibi;
     private Employee eric;
     private Employee Renetta;
-    private Employee fakeDates;
-    private Employee bibi;
-    private Employee eric;
-    private Employee Renetta;
     private Employee john;
     private Employee jane;
     private Employee bob;
@@ -104,7 +100,6 @@ public class DataSanitisationTests {
     public void isValidEmailForJane() {
         boolean expected = false;
         boolean actual = DataSanitisation.isValidEmail(jane.email());
-
         Assertions.assertEquals(expected, actual);
     }
 
@@ -122,7 +117,7 @@ public class DataSanitisationTests {
 
         Assertions.assertEquals(expected, actual);
     }
- 
+
     @Test
     @DisplayName("Check Valid Date of Birth Returns True")
     void checkValidDateOfBirthReturnsTrue() {
@@ -138,46 +133,67 @@ public class DataSanitisationTests {
         String input = "03/12/1000";
         Boolean expected = false;
         boolean actual = DataSanitisation.isDateOfBirthValid(input);
-    <<<<<<< DAO-Lewis
-    @DisplayName("check Valid Day Of Month On Leap Year Returns True")
-    void checkValidDayOfMonthOnLeapYearReturnsTrue() {
+        Assertions.assertEquals(expected, actual);
+    }
+
+
+    @Test
+    @DisplayName("Check Valid Date of Joining Returns True")
+    void checkValidDateOfJoiningReturnsTrue() {
+        String input = "03/12/2000";
+        Boolean expected = true;
+        boolean actual = DataSanitisation.isDateOfJoiningValid(input);
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("Check Invalid Date of Joining Returns False")
+    void checkInvalidDateOfJoiningReturnsFalse() {
+        String input = "03/12/2025";
+        Boolean expected = false;
+        boolean actual = DataSanitisation.isDateOfJoiningValid(input);
+        Assertions.assertEquals(expected, actual);
+    }
+
+         @Test
+         @DisplayName("Check Invalid Day Of Month On Leap Year Returns False")
+          void checkInvalidDayOfMonthOnLeapYearReturnsFalse() {
+        String input = "02/30/2020";
+        Boolean expected = false;
+        boolean actual = DataSanitisation.isDateOfJoiningValid(input);
+        Assertions.assertEquals(expected, actual);
+    }
+
+         @Test
+        @DisplayName("check Invalid Day Of Month Returns False For 30 Day Month")
+        void checkInvalidDayOfMonthReturnsFalseFor30DayMonth() {
+        String input = "4/31/2020";
+        Boolean expected = false;
+        boolean actual = DataSanitisation.isDateOfJoiningValid(input);
+        Assertions.assertEquals(expected, actual);
+         }
+
+         @Test
+         @DisplayName("check Valid Day Of Month On Leap Year Returns True")
+         void checkValidDayOfMonthOnLeapYearReturnsTrue() {
         String input = "02/29/2020";
         Boolean expected = true;
         boolean actual = DataSanitisation.isDateOfJoiningValid(input);
         Assertions.assertEquals(expected, actual);
 
-    }
+         }
 
-    @Test
-    @DisplayName("check Valid Day Of Month Returns True For 30 Day Month")
-    void checkValidDayOfMonthReturnsTrueFor30DayMonth() {
+        @Test
+        @DisplayName("check Valid Day Of Month Returns True For 30 Day Month")
+        void checkValidDayOfMonthReturnsTrueFor30DayMonth() {
         String input = "04/30/2020";
         Boolean expected = true;
         boolean actual = DataSanitisation.isDateOfJoiningValid(input);
-}
-      
-          @DisplayName("Check Valid Date of Joining Returns True")
-    void checkValidDateOfJoiningReturnsTrue() {
-        String input = "03/12/2000";
-        Boolean expected = true;
-        boolean actual = DataSanitisation.isDateOfJoiningValid(input);
-      
-          @DisplayName("check Invalid Day Of Month Returns False For 30 Day Month")
-    void checkInvalidDayOfMonthReturnsFalseFor30DayMonth() {
-        String input = "4/31/2020";
-        Boolean expected = false;
-        boolean actual = DataSanitisation.isDateOfJoiningValid(input);
-      
-          @DisplayName("Check Invalid Day Of Month On Leap Year Returns False")
-    void checkInvalidDayOfMonthOnLeapYearReturnsFalse() {
-        String input = "02/30/2020";
-        Boolean expected = false;
-        boolean actual = DataSanitisation.isDateOfJoiningValid(input);
-      
-          @DisplayName("Check Invalid Date of Joining Returns False")
-    void checkInvalidDateOfJoiningReturnsFalse() {
-        String input = "03/12/2025";
-        Boolean expected = false;
-        boolean actual = DataSanitisation.isDateOfJoiningValid(input);
+        Assertions.assertEquals(expected, actual);
+        }
+
+
+
+
 
 
