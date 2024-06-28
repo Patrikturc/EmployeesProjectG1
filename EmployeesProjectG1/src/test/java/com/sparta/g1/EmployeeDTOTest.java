@@ -67,4 +67,10 @@ public class EmployeeDTOTest {
     public void testEmployeePhoneNumber() {
         assertEquals("198838", employee.salary());
     }
+
+    @Test
+    public void testEmployeeToString() {
+        String expectedString = "EmployeeDTO{empId=496781, prefix='Dr.', firstName='Jonathan', middleInitial='Z', lastName='Rosa', gender=M, email='jonathan.rosa@gmail.com', dob=1981-02-19, dateOfJoining=2010-07-23, salary=198838}";
+        assertEquals(expectedString, employee.toString());
+    }
 }
