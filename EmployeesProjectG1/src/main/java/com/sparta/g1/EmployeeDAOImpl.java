@@ -12,14 +12,14 @@ import java.util.stream.Collectors;
 public class EmployeeDAOImpl implements EmployeeDAO {
 
     private ArrayList<Employee> employee = new ArrayList<>();
-  ;
+
     private Set<Employee> employeeSet;
 
     public EmployeeDAOImpl(Set<Employee> employeeList) {
         this.employeeSet = new HashSet<>(employeeList);
     }
 
-
+    @Override
     public Employee searchById(String id) {
         Employee foundEmployee = null;
 
@@ -42,6 +42,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         return employeeSet.stream().filter(employee -> !employee.dateOfJoining().isBefore(startDate) && !employee.dateOfJoining().isAfter(endDate)).collect(Collectors.toList());
     }
 
+    @Override
     public List<Employee> searchByAgeRange(int minAge, int maxAge) {
         List<Employee> employeeList = new ArrayList<>();
         LocalDate currentDate = LocalDate.now();
