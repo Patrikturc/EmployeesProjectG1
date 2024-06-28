@@ -37,4 +37,34 @@ public class EmployeeDTOTest {
     public void testEmployeeMiddleInitial() {
         assertEquals("Z", employee.middleInitial());
     }
+
+    @Test
+    public void testEmployeeLastName() {
+        assertEquals("Rosa", employee.lastName());
+    }
+
+    @Test
+    public void testEmployeeGender() {
+        assertEquals("M", employee.gender());
+    }
+
+    @Test
+    public void testEmployeeEmail() {
+        assertEquals("jonathan.rosa@gmail.com", employee.email());
+    }
+
+    @Test
+    public void testEmployeeDateOfBirth() {
+        assertEquals(LocalDate.of(1981, 2, 19), employee.dob());
+    }
+
+    @Test
+    public void testEmployeeHireDate() {
+        assertEquals(LocalDate.of(2010, 7, 23), employee.dateOfJoining());
+    }
+
+    @Test
+    public void testEmployeePhoneNumber() {
+        assertEquals("198838", employee.salary());
+    }
 }
