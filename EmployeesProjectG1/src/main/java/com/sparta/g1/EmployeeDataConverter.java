@@ -5,22 +5,31 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class EmployeeDataConverter {
 
+    private static final Logger logger = AppLogger.getLogger(Level.ALL, Level.INFO, true);
 
     public static HashSet<Employee> employeeDataConverter() throws IOException {
+        logger.log(Level.FINER, "Entered employee data converter method");
+
         HashSet<Employee> listOfEmployees = new HashSet<>();
         String[] employeeDataReader = EmployeeFactory.getEmployees(500);
         for (String employeeRecord : employeeDataReader){
             listOfEmployees.add(createEmployeeFromData(employeeRecord));
         }
         listOfEmployees.remove(null);
+
+        logger.log(Level.FINER, "Exited employee data converter method");
         return listOfEmployees;
     }
 
     private static Employee createEmployeeFromData(String data) {
+        logger.log(Level.FINER, "Entered create employee from data method");
+
         String[] parts = data.split(",");
         if (parts.length != 10) throw new IllegalArgumentException("Invalid data format");
         if (!isValidEmployeeDate(parts)) {
@@ -48,9 +57,12 @@ public class EmployeeDataConverter {
                 DataSanitisation.isDateOfBirthValid(parts[7]) &&
                 DataSanitisation.isDateOfJoiningValid(parts[8]) &&
                 DataSanitisation.isValidSalary(parts[9]);
+
     }
 
     public static HashSet<Employee> getListOfEmployees() throws IOException {
+        logger.log(Level.FINER, "Entered get list of employees method");
+        logger.log(Level.FINER, "Exited get list of employees method");
         return employeeDataConverter();
     }
 
