@@ -26,7 +26,6 @@ public class EmployeeDataConverter {
     private static Employee createEmployeeFromData(String data) {
         String[] parts = data.split(",");
         if (parts.length != 10) throw new IllegalArgumentException("Invalid data format");
-
         if (!isValidEmployeeDate(parts)) {
             return null;
         }

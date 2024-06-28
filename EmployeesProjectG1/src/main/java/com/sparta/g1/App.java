@@ -9,7 +9,6 @@ import java.util.Set;
 import java.time.LocalDate;
 import java.util.stream.Collectors;
 
-//This is a comment left by kian
 public class App {
     public static void main(String[] args) {
         try {
